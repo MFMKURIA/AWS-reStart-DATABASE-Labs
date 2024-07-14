@@ -1,0 +1,111 @@
+#AWS 270-[DF]-Lab - Selecting Data from a Database
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Connect to the Command Host
+
+1. Access the AWS Management Console:
+   - Go to the AWS Management Console.
+   - Navigate to Services > Compute > EC2.
+   - In the left navigation pane, click on Instances.
+
+2. Connect to the Command Host:
+   - Find the instance labeled "Command Host".
+   - Select the checkbox next to it and click Connect.
+   - Choose the Session Manager tab.
+   - Click Connect to open a terminal window.
+
+3. Configure the Terminal:
+   - Once the terminal window opens, execute the following commands:
+     ```
+     sudo su
+     cd /home/ec2-user/
+     ```
+
+4. Connect to MySQL Database:
+   - To connect to the MySQL database server, run:
+     ```
+     mysql -u root --password='re:St@rt!9'
+     ```
+   - Replace `'re:St@rt!9'` with your actual MySQL root password if different.
+
+ Task 2: Query the world database
+
+1. Show Existing Databases:
+   - To verify available databases, run:
+     ```
+     SHOW DATABASES;
+     ```
+   - Confirm that `world` database exists.
+
+2. List All Rows and Columns in a Table:
+   - Query all data from the `country` table:
+     ```
+     SELECT  FROM world.country;
+     ```
+
+3. Count the Number of Rows:
+   - To count the number of rows in the `country` table:
+     ```
+     SELECT COUNT() FROM world.country;
+     ```
+
+4. Show Columns in a Table:
+   - Display all columns in the `country` table to understand its structure:
+     ```
+     SHOW COLUMNS FROM world.country;
+     ```
+
+5. Query Specific Columns:
+   - Select specific columns (`Name`, `Capital`, `Region`, `SurfaceArea`, `Population`) from the `country` table:
+     ```
+     SELECT Name, Capital, Region, SurfaceArea AS "Surface Area", Population FROM world.country;
+     ```
+
+6. Order Data by a Column:
+   - Order the query results by `Population` in ascending order:
+     ```
+     SELECT Name, Capital, Region, SurfaceArea AS "Surface Area", Population FROM world.country ORDER BY Population;
+     ```
+   - To order in descending order, use:
+     ```
+     SELECT Name, Capital, Region, SurfaceArea AS "Surface Area", Population FROM world.country ORDER BY Population DESC;
+     ```
+
+7. Use WHERE Clause for Conditions:
+   - Filter data based on conditions (e.g., population greater than 50,000,000):
+     ```
+     SELECT Name, Capital, Region, SurfaceArea AS "Surface Area", Population FROM world.country WHERE Population > 50000000;
+     ```
+   - Combine conditions using `AND` to refine queries:
+     ```
+     SELECT Name, Capital, Region, SurfaceArea AS "Surface Area", Population FROM world.country WHERE Population > 50000000 AND Population < 100000000 ORDER BY Population DESC;
+     ```
+
+ Challenge (Optional)
+
+- Query the country table:
+  ```
+  SELECT Name, Capital, Region, Population 
+  FROM world.country 
+  WHERE Region = 'Southern Europe' AND Population > 50000000;
+  ```
+
+ Conclusion
+
+Congratulations! You have successfully:
+
+- Used the SELECT statement to query a database.
+- Used the COUNT() function to count rows.
+- Utilized various database operators (`<`, `>`, `=`, `WHERE`, `ORDER BY`, `AND`) to filter and order data.
+
+ Additional Resources
+
+For more information on SQL and AWS:
+
+- [SELECT statements](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_SQL.html)
+- [COUNT function](https://dev.mysql.com/doc/refman/8.0/en/counting-rows.html)
+- [Order By](https://dev.mysql.com/doc/refman/8.0/en/sorting-rows.html)
+- [Comparison Operators](https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html)
+
+This guide should help you navigate through the lab efficiently. If you encounter any issues, refer to the AWS documentation or seek assistance from your instructor.

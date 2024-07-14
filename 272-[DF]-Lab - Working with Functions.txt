@@ -1,0 +1,109 @@
+#AWS 272-[DF]-Lab - Working with Functions
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Connect to the Command Host
+
+1. Access AWS Management Console:
+   - Open your web browser and go to the [AWS Management Console](https://aws.amazon.com/console/).
+   - Log in with your credentials.
+
+2. Navigate to Amazon EC2:
+   - In the AWS Management Console, click on Services in the top left corner.
+   - Under Compute, select EC2.
+
+3. Locate and Connect to the Command Host:
+   - In the left navigation pane, click on Instances.
+   - Find the instance labeled Command Host.
+   - Select the checkbox next to it and click Connect.
+
+4. Connect using Session Manager:
+   - In the Connect To Your Instance dialog, choose the Session Manager tab.
+   - Click Connect to open a terminal window.
+
+5. Configure the Terminal:
+   - Once the terminal window opens, run the following commands to set up your environment:
+     ```
+     sudo su
+     cd /home/ec2-user/
+     ```
+
+6. Connect to MySQL:
+   - To connect to the MySQL database server, run the following command:
+     ```
+     mysql -u root --password='re:St@rt!9'
+     ```
+   - Replace `'re:St@rt!9'` with the actual password if it differs.
+
+ Task 2: Query the world database
+
+1. Show Databases:
+   - First, verify that the `world` database exists by running:
+     ```
+     SHOW DATABASES;
+     ```
+   - Ensure `world` is listed. Contact support if it's missing.
+
+2. Review the Country Table:
+   - View the structure and data in the `country` table:
+     ```
+     SELECT  FROM world.country;
+     ```
+
+3. Use of Aggregate Functions:
+   - Aggregate functions operate on sets of rows and return a single value summarizing the data. Example:
+     ```
+     SELECT SUM(Population), AVG(Population), MAX(Population), MIN(Population), COUNT(Population)
+     FROM world.country;
+     ```
+
+4. Splitting Strings with SUBSTRING_INDEX():
+   - Use `SUBSTRING_INDEX()` to split strings based on a delimiter (like a space):
+     ```
+     SELECT Region, SUBSTRING_INDEX(Region, " ", 1) AS Region_Name_1
+     FROM world.country;
+     ```
+
+5. Filtering with WHERE Clause and Functions:
+   - Apply functions in the `WHERE` clause to filter data:
+     ```
+     SELECT Name, Region
+     FROM world.country
+     WHERE SUBSTRING_INDEX(Region, " ", 1) = "Southern";
+     ```
+
+6. Using LENGTH() and TRIM() Functions:
+   - Determine string length and trim whitespace:
+     ```
+     SELECT Region
+     FROM world.country
+     WHERE LENGTH(TRIM(Region)) < 10;
+     ```
+
+7. Filtering Duplicates with DISTINCT():
+   - Use `DISTINCT()` to retrieve unique values:
+     ```
+     SELECT DISTINCT(Region)
+     FROM world.country
+     WHERE LENGTH(TRIM(Region)) < 10;
+     ```
+
+ Challenge: Splitting Region Names
+
+To split the region names `Micronesian/Caribbean` into two separate columns (`Region Name 1` and `Region Name 2`):
+
+```sql
+SELECT 
+    SUBSTRING_INDEX(Region, "/", 1) AS Region_Name_1,
+    SUBSTRING_INDEX(Region, "/", -1) AS Region_Name_2
+FROM 
+    world.country
+WHERE 
+    Region LIKE "%Micronesian/Caribbean%";
+```
+
+ Conclusion
+
+You have now completed the lab assignment by using various SQL functions to query and manipulate data in the `world` database. Make sure to follow any additional instructions provided by your instructor or lab guidelines to successfully conclude the session.
+
+If you have any further questions or need clarification on any step, feel free to ask!

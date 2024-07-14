@@ -1,0 +1,107 @@
+#AWS 160-[DF]-Lab - Build Your Database Server and Interact with Your DB Using an App
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Create a Security Group for the RDS DB Instance
+
+1. Navigate to VPC Settings:
+   - Log in to AWS Management Console.
+   - Go to Services > VPC under Networking & Content Delivery.
+   - Click on Security Groups in the left navigation pane.
+
+2. Create Security Group:
+   - Click Create security group.
+   - Configure:
+     - Security group name: DB Security Group
+     - Description: Permit access from Web Security Group
+     - VPC: Lab VPC
+
+3. Add Inbound Rule:
+   - In the Inbound rules section, click Add rule.
+   - Configure:
+     - Type: MySQL/Aurora (3306)
+     - Source: Type `sg` in the search field and select Web Security Group.
+
+4. Create Security Group:
+   - Scroll down and click Create security group.
+
+ Task 2: Create a DB Subnet Group
+
+1. Navigate to RDS:
+   - Go to Services > RDS under Database.
+
+2. Create DB Subnet Group:
+   - Click Subnet groups in the left navigation pane.
+   - Click Create DB Subnet Group.
+   - Configure:
+     - Name: DB Subnet Group
+     - Description: DB Subnet Group
+     - VPC ID: Lab VPC
+
+3. Add Subnets:
+   - Under Add subnets, select:
+     - First Availability Zone: Select the appropriate subnet.
+     - Second Availability Zone: Select the appropriate subnet.
+   - Click Create.
+
+ Task 3: Create an Amazon RDS DB Instance
+
+1. Launch RDS Instance:
+   - Click Databases in the left navigation pane.
+   - Click Create database.
+
+2. Configure DB Instance:
+   - Choose Standard create.
+   - Engine options:
+     - Engine type: MySQL
+     - Engine version: Latest version
+     - Templates: Dev/Test
+   - Settings:
+     - DB instance identifier: lab-db
+     - Master username: main
+     - Master password: lab-password
+     - Confirm password: lab-password
+   - Instance configuration:
+     - DB instance class: Select appropriate class (e.g., db.t3.medium).
+   - Storage:
+     - Storage type: General Purpose (SSD)
+   - Connectivity:
+     - Virtual Private Cloud (VPC): Lab VPC
+     - VPC security group: Choose existing and select DB Security Group.
+   - Additional configuration:
+     - Initial database name: lab
+     - Backup: Uncheck Enable automated backups.
+   - Click Create database.
+
+3. Wait for Deployment:
+   - Wait for the database instance status to change to Available.
+
+4. Copy Endpoint:
+   - Once available, scroll down to Connectivity & security.
+   - Copy the Endpoint field (e.g., `lab-db.cggq8lhnxvnv.us-west-2.rds.amazonaws.com`).
+
+ Task 4: Interact with Your Database
+
+1. Open Web Application:
+   - Copy the WebServer IP address provided.
+   - Open a new web browser tab, paste the IP address, and press Enter.
+
+2. Configure Web Application:
+   - Click the RDS link on the web application page.
+   - Configure:
+     - Endpoint: Paste the Endpoint you copied earlier.
+     - Database: lab
+     - Username: main
+     - Password: lab-password
+   - Click Submit.
+
+3. Test the Application:
+   - The web application will interact with the RDS database.
+   - Test by adding, editing, and removing contacts in the Address Book.
+
+ Conclusion
+
+You have successfully completed the lab by launching an Amazon RDS DB instance with high availability, configuring it to allow connections from your web server, and interacting with your database through a web application.
+
+Remember to End Lab to finalize the session.
+

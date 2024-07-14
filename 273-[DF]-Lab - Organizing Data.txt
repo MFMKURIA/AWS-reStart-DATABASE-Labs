@@ -1,0 +1,101 @@
+#AWS 273-[DF]-Lab - Organizing Data
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+    Step 1: Start the Lab
+1.   Start the Lab  :
+   - Go to the upper-right corner of the lab instructions page.
+   - Click on the "Start Lab" button.
+   - If you get an "Access Denied" error, close the error box and click "Start Lab" again.
+   - Wait for the lab to be ready. The lab status indicator (circle next to AWS at the upper-left corner) will turn green when the lab is ready.
+
+    Step 2: Access the AWS Management Console
+1.   Open the AWS Management Console  :
+   - Click the green circle next to AWS at the top of the instructions.
+   - This will open the AWS Management Console in a new browser tab.
+   - Ensure that you allow pop-ups if a new tab does not open.
+   - Arrange the AWS Management Console tab alongside the lab instructions tab so you can see both.
+
+    Step 3: Connect to the Command Host
+1.   Open the EC2 Service  :
+   - In the AWS Management Console, click on the "Services" menu.
+   - Under "Compute," select "EC2."
+2.   Find and Connect to the Command Host  :
+   - In the navigation pane on the left, click on "Instances."
+   - Locate the instance labeled "Command Host."
+   - Select the checkbox next to "Command Host" and click "Connect."
+3.   Connect via Session Manager  :
+   - In the "Connect to instance" dialog, select the "Session Manager" tab.
+   - Click the "Connect" button to open a terminal window.
+   - If the "Connect" button is not available, wait for a few minutes and try again.
+
+    Step 4: Configure the Terminal and Connect to the Database
+1.   Run Configuration Commands  :
+   - Copy and paste the following commands into the Session Manager terminal window:
+     ```sh
+     sudo su
+     cd /home/ec2-user/
+     ```
+   - If you are using a Windows system, press `Shift + Ctrl + V` to paste the commands.
+2.   Connect to the Database  :
+   - Run the following command to connect to the MySQL database server:
+     ```sh
+     mysql -u root --password='re:St@rt!9'
+     ```
+
+    Step 5: Query the World Database
+1.   Show Databases  :
+   - In the terminal, type the following command to show all databases:
+     ```sql
+     SHOW DATABASES;
+     ```
+   - Ensure that the database named "world" is available.
+2.   Review the Country Table Schema  :
+   - Run the following query to display the schema and data of the `country` table:
+     ```sql
+     SELECT   FROM world.country;
+     ```
+
+    Step 6: Use SQL Functions and Clauses
+1.   Filter and Order Data  :
+   - Run the following query to filter and order records by population for the region "Australia and New Zealand":
+     ```sql
+     SELECT Region, Name, Population FROM world.country WHERE Region = 'Australia and New Zealand' ORDER BY Population DESC;
+     ```
+2.   Group and Summarize Data  :
+   - Use the `GROUP BY` clause with the `SUM()` function to get the total population for the region "Australia and New Zealand":
+     ```sql
+     SELECT Region, SUM(Population) FROM world.country WHERE Region = 'Australia and New Zealand' GROUP BY Region ORDER BY SUM(Population) DESC;
+     ```
+3.   Calculate Running Total  :
+   - Use the `OVER` clause with the `SUM()` function to get a running total of the population for the region "Australia and New Zealand":
+     ```sql
+     SELECT Region, Name, Population, SUM(Population) OVER (PARTITION BY Region ORDER BY Population) AS 'Running Total' FROM world.country WHERE Region = 'Australia and New Zealand';
+     ```
+4.   Rank Data  :
+   - Use the `RANK()` function with the `OVER` clause to rank countries by population in the region "Australia and New Zealand":
+     ```sql
+     SELECT Region, Name, Population, SUM(Population) OVER (PARTITION BY Region ORDER BY Population) AS 'Running Total', RANK() OVER (PARTITION BY Region ORDER BY Population) AS 'Ranked' FROM world.country WHERE Region = 'Australia and New Zealand';
+     ```
+
+    Challenge Task
+1.   Rank Countries by Population  :
+   - Write a query to rank the countries in each region by their population from largest to smallest:
+     ```sql
+     SELECT Region, Name, Population, RANK() OVER (PARTITION BY Region ORDER BY Population DESC) AS 'Ranked' FROM world.country;
+     ```
+
+    Step 7: End the Lab
+1.   End the Lab  :
+   - Once you have completed the tasks, click "End Lab" at the top of the page.
+   - Confirm by clicking "Yes."
+   - A message indicating that the lab has ended will be briefly displayed.
+
+    Additional Resources
+- For more information about database functions and operators, refer to:
+  - [GROUP BY clause](https://www.mysqltutorial.org/mysql-group-by.aspx)
+  - [OVER clause](https://www.sqlservertutorial.net/sql-server-window-functions/sql-server-over-clause/)
+  - [SUM function](https://www.mysqltutorial.org/mysql-sum/)
+  - [RANK function](https://www.sqlservertutorial.net/sql-server-window-functions/sql-server-rank-function/)
+
+Congratulations! You have successfully completed the lab and learned how to use the GROUP BY and OVER clauses with common database functions.

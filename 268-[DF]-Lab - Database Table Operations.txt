@@ -1,0 +1,123 @@
+#AWS 268-[DF]-Lab - Database Table Operations
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Connect to the Command Host
+
+1. Accessing the AWS Management Console:
+   - Go to the AWS Management Console and navigate to EC2 under Compute services.
+
+2. Connecting to the Command Host:
+   - Select "Instances" from the left navigation menu.
+   - Locate the instance labeled "Command Host" and select the checkbox next to it.
+   - Click on "Connect" and choose "Session Manager" tab.
+   - Click "Connect" to open a terminal window.
+
+3. Configuring the Terminal:
+   - Once connected, run the following commands in the terminal:
+     ```bash
+     sudo su
+     cd /home/ec2-user/
+     ```
+
+4. Connecting to MySQL:
+   - To connect to the MySQL database instance, use the following command (replace `<password>` with your actual password):
+     ```bash
+     mysql -u root --password='<password>'
+     ```
+   - This command opens the MySQL command-line client where you can execute SQL queries.
+
+ Task 2: Create a database and a table
+
+1. Creating the `world` Database:
+   - To create a new database named `world`, run:
+     ```sql
+     CREATE DATABASE world;
+     ```
+
+2. Verifying the Database Creation:
+   - To verify that the `world` database has been created, run:
+     ```sql
+     SHOW DATABASES;
+     ```
+
+3. Creating the `country` Table:
+   - To create a table named `country` within the `world` database, run:
+     ```sql
+     CREATE TABLE world.country (
+       `Code` CHAR(3) NOT NULL DEFAULT '',
+       `Name` CHAR(52) NOT NULL DEFAULT '',
+       `Continent` ENUM('Asia','Europe','North America','Africa','Oceania','Antarctica','South America') NOT NULL DEFAULT 'Asia',
+       `Region` CHAR(26) NOT NULL DEFAULT '',
+       `SurfaceArea` FLOAT(10,2) NOT NULL DEFAULT '0.00',
+       `IndepYear` SMALLINT(6) DEFAULT NULL,
+       `Population` INT(11) NOT NULL DEFAULT '0',
+       `LifeExpectancy` FLOAT(3,1) DEFAULT NULL,
+       `GNP` FLOAT(10,2) DEFAULT NULL,
+       `GNPOld` FLOAT(10,2) DEFAULT NULL,
+       `LocalName` CHAR(45) NOT NULL DEFAULT '',
+       `GovernmentForm` CHAR(45) NOT NULL DEFAULT '',
+       `HeadOfState` CHAR(60) DEFAULT NULL,
+       `Capital` INT(11) DEFAULT NULL,
+       `Code2` CHAR(2) NOT NULL DEFAULT '',
+       PRIMARY KEY (`Code`)
+     );
+     ```
+
+4. Verifying Table Creation:
+   - Switch to the `world` database:
+     ```sql
+     USE world;
+     ```
+   - To list all tables in the `world` database:
+     ```sql
+     SHOW TABLES;
+     ```
+
+5. Altering the Table (`country`):
+   - Correct the misspelled column name `Conitinent` to `Continent`:
+     ```sql
+     ALTER TABLE world.country RENAME COLUMN Conitinent TO Continent;
+     ```
+
+ Task 3: Delete a database and tables
+
+1. Dropping the `city` Table (Challenge 1):
+   - To drop the `city` table (assuming it exists):
+     ```sql
+     DROP TABLE world.city;
+     ```
+
+2. Writing a Query to Drop the `country` Table (Challenge 2):
+   - To drop the `country` table:
+     ```sql
+     DROP TABLE world.country;
+     ```
+
+3. Verifying Tables Deletion:
+   - To verify that all tables have been dropped:
+     ```sql
+     SHOW TABLES;
+     ```
+
+4. Dropping the `world` Database:
+   - To drop the `world` database:
+     ```sql
+     DROP DATABASE world;
+     ```
+
+5. Verifying Database Deletion:
+   - To verify that the `world` database has been deleted:
+     ```sql
+     SHOW DATABASES;
+     ```
+
+ Conclusion
+
+By following these steps, you've learned how to:
+- Create databases and tables (`CREATE` statement).
+- View available databases and tables (`SHOW` statement).
+- Alter table structure (`ALTER` statement).
+- Delete databases and tables (`DROP` statement).
+
+This completes the lab assignment. If you have any further questions or need clarification on any step, feel free to ask!

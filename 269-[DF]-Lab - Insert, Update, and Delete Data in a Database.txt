@@ -1,0 +1,127 @@
+#AWS 269-[DF]-Lab - Insert, Update, and Delete Data in a Database
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Connect to a Database
+
+1. Access AWS Management Console:
+   - Open your web browser and navigate to the AWS Management Console.
+   - Log in with your credentials.
+
+2. Navigate to EC2 Instances:
+   - Click on Services in the top-left corner of the console.
+   - Under Compute, select EC2.
+   - In the left navigation pane, click on Instances.
+
+3. Connect to the Command Host:
+   - Find the instance labeled Command Host in the list of instances.
+   - Select the checkbox next to it and click Connect.
+   - Choose the Session Manager tab and then click Connect to open a terminal window.
+
+4. Configure Terminal:
+   - Once the terminal window opens, run the following commands:
+     ```bash
+     sudo su
+     cd /home/ec2-user/
+     ```
+   - These commands switch to the root user and navigate to the home directory.
+
+5. Connect to MySQL:
+   - To connect to the MySQL database instance, run:
+     ```bash
+     mysql -u root --password='re:St@rt!9'
+     ```
+   - Replace `'re:St@rt!9'` with your actual MySQL password if different.
+
+6. Verify Database Connection:
+   - To list all existing databases, run:
+     ```sql
+     SHOW DATABASES;
+     ```
+   - Ensure that you see the `world` database listed, which contains tables like `country`, `city`, and `countrylanguage`.
+
+ Task 2: Insert Data into a Table
+
+1. Insert Sample Data into `country` Table:
+   - Check if the `country` table is empty:
+     ```sql
+     SELECT  FROM world.country;
+     ```
+   - It should return no rows if empty.
+
+2. Insert Data:
+   - Insert two rows into the `country` table:
+     ```sql
+     INSERT INTO world.country VALUES ('IRL','Ireland','Europe','British Islands',70273.00,1921,3775100,76.8,75921.00,73132.00,'Ireland/Éire','Republic',1447,'IE');
+     
+     INSERT INTO world.country VALUES ('AUS','Australia','Oceania','Australia and New Zealand',7741220.00,1901,18886000,79.8,351182.00,392911.00,'Australia','Constitutional Monarchy, Federation',135,'AU');
+     ```
+   - Verify that the rows were inserted successfully:
+     ```sql
+     SELECT  FROM world.country;
+     ```
+
+ Task 3: Update Rows in a Table
+
+1. Update Data in `country` Table:
+   - Update the `Population` column for all rows:
+     ```sql
+     UPDATE world.country SET Population = 0;
+     ```
+   - Verify the update:
+     ```sql
+     SELECT  FROM world.country;
+     ```
+
+2. Update Multiple Columns:
+   - Update `Population` and `SurfaceArea` columns for all rows:
+     ```sql
+     UPDATE world.country SET Population = 100, SurfaceArea = 100;
+     ```
+   - Verify the update:
+     ```sql
+     SELECT  FROM world.country;
+     ```
+
+ Task 4: Delete Rows from a Table
+
+1. Delete Data from `country` Table:
+   - Delete all rows from the `country` table:
+     ```sql
+     DELETE FROM world.country;
+     ```
+   - Verify that the table is empty:
+     ```sql
+     SELECT  FROM world.country;
+     ```
+
+ Task 5: Import Data using an SQL File
+
+1. Import Data from `world.sql`:
+   - Exit the MySQL terminal:
+     ```sql
+     QUIT;
+     ```
+   - Verify the presence of `world.sql` file:
+     ```bash
+     ls /home/ec2-user/world.sql
+     ```
+   - Import data from `world.sql`:
+     ```bash
+     mysql -u root --password='re:St@rt!9' < /home/ec2-user/world.sql
+     ```
+   - Reconnect to MySQL:
+     ```bash
+     mysql -u root --password='re:St@rt!9'
+     ```
+   - Verify the import:
+     ```sql
+     USE world;
+     SHOW TABLES;
+     SELECT  FROM country;
+     ```
+   - Ensure data is imported into `country`, `city`, and `countrylanguage` tables.
+
+ Conclusion
+
+You've now successfully completed the lab, performing essential database operations like inserting, updating, deleting data, and importing data from an SQL file in an AWS environment using MySQL. If you encounter any issues, refer to the troubleshooting tips provided in the lab instructions.

@@ -1,0 +1,141 @@
+#AWS 274-[DF]-Lab - Introduction to Amazon Aurora
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Create an Aurora Instance
+
+1. Access AWS Management Console:
+   - Go to the AWS Management Console and log in.
+   - Ensure you're in the correct AWS region as instructed.
+
+2. Navigate to RDS:
+   - In the search bar at the top, type "RDS" and choose it from the dropdown results.
+   - In the left navigation pane, select "Databases."
+
+3. Start Database Creation:
+   - Click on "Create database."
+
+4. Configure Database Settings:
+   - Choose "Standard create" for the database creation method.
+   - For "Engine type," select "Amazon Aurora."
+   - Choose the appropriate version for "Engine version."
+   - Select "Dev/Test" for Templates.
+
+5. Set Database Instance Details:
+   - Under "Settings":
+     - Enter a name for "DB cluster identifier" (e.g., "aurora").
+     - Set "Master username" as "admin."
+     - Set "Master password" as "admin123" (or your preferred password).
+   - In "DB instance class," choose "Burstable classes" and select "db.t3.medium."
+   
+6. Configure Connectivity and Security:
+   - In the "Connectivity" section:
+     - Choose the appropriate VPC from "Virtual private cloud (VPC)."
+     - Select the correct subnet group from "Subnet group."
+     - Choose "No" for "Public access."
+     - Under "VPC security group," select "Choose existing" and pick "DBSecurityGroup."
+
+7. Additional Configuration and Settings:
+   - Scroll down and adjust settings as required:
+     - Modify "Initial database name" to "world."
+     - Disable "Enable Enhanced monitoring."
+     - Disable "Enable auto minor version upgrade."
+
+8. Create the Database:
+   - Review your settings.
+   - Click on "Create database."
+
+   > Note: Wait for the database creation process to complete. This may take a few minutes.
+
+ Task 2: Connect to an Amazon EC2 Linux Instance
+
+1. Access EC2:
+   - In the AWS Management Console, search for "EC2" in the search bar and select it.
+
+2. Navigate to Instances:
+   - In the left navigation pane, click on "Instances."
+
+3. Connect to EC2 Instance:
+   - Locate the instance labeled "Command Host" (or as specified in your lab).
+   - Select the checkbox next to the instance.
+   - Click on "Connect."
+
+4. Use Session Manager:
+   - Choose "Session Manager" to open a terminal window and connect to the instance.
+
+   > Note: If the "Connect" button is disabled, wait a few moments and try again.
+
+ Task 3: Configure the Amazon EC2 Linux Instance to Connect to Aurora
+
+1. Install MariaDB Client:
+   - In the terminal window connected to your EC2 instance, run the following command:
+     ```bash
+     sudo yum install mariadb -y
+     ```
+
+   > This installs the MariaDB client needed to connect to the Aurora instance.
+
+2. Retrieve Aurora Endpoint:
+   - Return to the AWS Management Console.
+   - Navigate to "RDS" and select "Databases."
+   - Wait until your Aurora instance shows as "Available."
+   - Click on your Aurora instance name (e.g., "aurora").
+
+3. Copy Endpoint:
+   - Go to the "Connectivity & security" tab.
+   - Under "Endpoints," copy the "Endpoint" for the Writer instance to your text editor.
+
+4. Connect to Aurora Instance:
+   - Back in your EC2 terminal window, use the following command to connect to Aurora (replace `<endpoint_goes_here>` with your copied endpoint):
+     ```bash
+     mysql -u admin --password='admin123' -h <endpoint_goes_here>
+     ```
+
+   > Example: `mysql -u admin --password='admin123' -h mydbcluster.cluster-123456789012.us-west-2.rds.amazonaws.com`
+
+ Task 4: Create a Table, Insert and Query Records
+
+1. Create a Table:
+   - In the MySQL prompt (connected to Aurora), execute the following command to create a table named "country":
+     ```sql
+     CREATE TABLE `country` (
+       `Code` CHAR(3) NOT NULL DEFAULT '',
+       `Name` CHAR(52) NOT NULL DEFAULT '',
+       `Continent` ENUM('Asia','Europe','North America','Africa','Oceania','Antarctica','South America') NOT NULL DEFAULT 'Asia',
+       `Region` CHAR(26) NOT NULL DEFAULT '',
+       `SurfaceArea` FLOAT(10,2) NOT NULL DEFAULT '0.00',
+       `IndepYear` SMALLINT(6) DEFAULT NULL,
+       `Population` INT(11) NOT NULL DEFAULT '0',
+       `LifeExpectancy` FLOAT(3,1) DEFAULT NULL,
+       `GNP` FLOAT(10,2) DEFAULT NULL,
+       `GNPOld` FLOAT(10,2) DEFAULT NULL,
+       `LocalName` CHAR(45) NOT NULL DEFAULT '',
+       `GovernmentForm` CHAR(45) NOT NULL DEFAULT '',
+       `Capital` INT(11) DEFAULT NULL,
+       `Code2` CHAR(2) NOT NULL DEFAULT '',
+       PRIMARY KEY (`Code`)
+     );
+     ```
+
+2. Insert Records:
+   - Insert sample records into the "country" table using the following SQL commands:
+     ```sql
+     INSERT INTO `country` VALUES ('GAB','Gabon','Africa','Central Africa',267668.00,1960,1226000,50.1,5493.00,5279.00,'Le Gabon','Republic',902,'GA');
+     INSERT INTO `country` VALUES ('IRL','Ireland','Europe','British Islands',70273.00,1921,3775100,76.8,75921.00,73132.00,'Ireland/Éire','Republic',1447,'IE');
+     INSERT INTO `country` VALUES ('THA','Thailand','Asia','Southeast Asia',513115.00,1350,61399000,68.6,116416.00,153907.00,'Prathet Thai','Constitutional Monarchy',3320,'TH');
+     INSERT INTO `country` VALUES ('CRI','Costa Rica','North America','Central America',51100.00,1821,4023000,75.8,10226.00,9757.00,'Costa Rica','Republic',584,'CR');
+     INSERT INTO `country` VALUES ('AUS','Australia','Oceania','Australia and New Zealand',7741220.00,1901,18886000,79.8,351182.00,392911.00,'Australia','Constitutional Monarchy, Federation',135,'AU');
+     ```
+
+3. Query Records:
+   - Execute the following SQL query to select records from the "country" table:
+     ```sql
+     SELECT  FROM country WHERE GNP > 35000 AND Population > 10000000;
+     ```
+
+   > This query retrieves countries where GNP (Gross National Product) is greater than 35000 and Population is greater than 10 million.
+
+ Conclusion
+
+By following these steps, you've successfully completed the lab assignment for Amazon Aurora. This includes creating an Aurora instance, connecting to an EC2 instance, configuring it to connect to Aurora, and performing basic database operations like creating tables, inserting data, and querying records.
+

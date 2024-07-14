@@ -1,0 +1,85 @@
+#AWS 271-[DF]-Lab - Performing a Conditional Search
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Connect to the Command Host
+
+1. Access AWS Management Console:
+   - Go to the AWS Management Console.
+   - Choose Services in the upper-right corner and select Compute > EC2.
+   - In the left navigation pane, click Instances.
+
+2. Connect to Command Host:
+   - Locate the instance labeled "Command Host" in the list of instances.
+   - Select the checkbox next to the instance and click Connect.
+   - In the Connect to instance dialog, choose the Session Manager tab.
+   - Click Connect to open a terminal window.
+
+3. Configure Terminal:
+   - Once connected, run the following commands in the terminal:
+     ```
+     sudo su
+     cd /home/ec2-user/
+     ```
+
+4. Connect to MySQL:
+   - To connect to the MySQL database server, run:
+     ```
+     mysql -u root --password='re:St@rt!9'
+     ```
+   - Enter the password when prompted. Note: The password used here is a sample; replace it with the actual password provided in your lab environment.
+
+ Task 2: Query the world database
+
+1. Show Existing Databases:
+   - To list all databases available, execute:
+     ```
+     SHOW DATABASES;
+     ```
+   - Verify that a database named `world` is present.
+
+2. Review Table Schema and Data:
+   - Display all records in the `country` table to understand its structure:
+     ```
+     SELECT  FROM world.country;
+     ```
+
+3. Perform Conditional Search:
+   - Use the `WHERE` clause to filter records based on specified conditions. For example, to find countries with populations between 50 million and 100 million:
+     ```
+     SELECT Name, Capital, Region, SurfaceArea, Population 
+     FROM world.country 
+     WHERE Population BETWEEN 50000000 AND 100000000;
+     ```
+
+4. Using the `LIKE` Operator:
+   - Search for records where the `Region` column contains the term "Europe" using wildcard `%`:
+     ```
+     SELECT SUM(Population) AS "Europe Population Total" 
+     FROM world.country 
+     WHERE Region LIKE "%Europe%";
+     ```
+
+5. Case-Insensitive Search:
+   - Demonstrate how to perform a case-insensitive search using the `LOWER` function:
+     ```
+     SELECT Name, Capital, Region, SurfaceArea, Population 
+     FROM world.country 
+     WHERE LOWER(Region) LIKE "%central%";
+     ```
+
+ Challenge: Sum of Surface Area and Population for North America
+
+- Task Description: Write a query to return the sum of the surface area (`SurfaceArea`) and population (`Population`) for North America.
+
+- Solution:
+  - First, identify the correct region and then execute the query:
+    ```
+    SELECT SUM(SurfaceArea) AS "Total Surface Area", SUM(Population) AS "Total Population"
+    FROM world.country
+    WHERE Region = 'North America';
+    ```
+
+ Conclusion
+
+By following these steps, you will successfully complete the lab assignment by performing conditional searches using SQL queries in the AWS environment. Each step ensures you understand how to connect to databases, execute basic queries, and apply various operators to filter and aggregate data effectively.

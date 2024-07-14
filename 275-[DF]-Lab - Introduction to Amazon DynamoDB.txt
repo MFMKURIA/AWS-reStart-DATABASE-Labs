@@ -1,0 +1,105 @@
+#AWS 275-[DF]-Lab - Introduction to Amazon DynamoDB
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Create a new table
+
+1. Access AWS Management Console:
+   - Open your web browser and navigate to the [AWS Management Console](https://aws.amazon.com/console/).
+   - Sign in with your AWS account credentials.
+
+2. Navigate to DynamoDB:
+   - In the AWS Management Console, at the top left, click on Services.
+   - Under Database, select DynamoDB.
+
+3. Create a Table:
+   - Click on Create table.
+   - Table name: Enter `Music`.
+   - Primary key:
+     - Partition key: Enter `Artist` and select String from the dropdown.
+     - Sort key (optional): Enter `Song` and select String from the dropdown.
+   - Leave other settings as default.
+
+4. Create the Table:
+   - Scroll down and click on Create table.
+
+5. Wait for Table Creation:
+   - DynamoDB will create the table (`Music`). Wait until the status changes to Active before proceeding.
+
+ Task 2: Add data
+
+1. Add Items to the Table:
+   - Click on the newly created `Music` table.
+   - Click on Items tab.
+   - Click on Create item.
+
+2. Enter Data for First Item:
+   - Enter the following data:
+     - Artist: Pink Floyd
+     - Song: Money
+     - Add new attribute: Album (String) - The Dark Side of the Moon
+     - Add new attribute: Year (Number) - 1973
+   - Click on Save.
+
+3. Add Data for Second Item:
+   - Click on Create item again.
+   - Enter the following data:
+     - Artist: John Lennon
+     - Song: Imagine
+     - Add new attribute: Album (String) - Imagine
+     - Add new attribute: Year (Number) - 1971
+     - Add new attribute: Genre (String) - Soft rock
+   - Click on Save.
+
+4. Add Data for Third Item:
+   - Click on Create item again.
+   - Enter the following data:
+     - Artist: Psy
+     - Song: Gangnam Style
+     - Add new attribute: Album (String) - Psy 6 (Six Rules), Part 1
+     - Add new attribute: Year (Number) - 2011
+     - Add new attribute: LengthSeconds (Number) - 219
+   - Click on Save.
+
+ Task 3: Modify an existing item
+
+1. Modify Item Data:
+   - Click on Explore Items under the `Music` table.
+   - Find the item for Psy.
+   - Click on the item to edit.
+   - Change the Year attribute from `2011` to `2012`.
+   - Click on Save changes.
+
+ Task 4: Query the table
+
+1. Query Items:
+   - Go back to the `Music` table.
+   - Click on Query under the Items tab.
+   - Enter the following details:
+     - Partition key (Artist): Psy
+     - Sort key (Song): Gangnam Style
+   - Click on Run.
+
+2. View Results:
+   - Verify that the song Gangnam Style by Psy appears in the results.
+
+ Task 5: Delete the table
+
+1. Delete the Table:
+   - Go back to the `Music` table.
+   - Click on Actions.
+   - Select Delete table.
+   - In the confirmation box, enter `delete`.
+   - Click on Delete table to confirm.
+
+ Conclusion
+
+Congratulations! You have successfully completed the lab by:
+
+- Creating an Amazon DynamoDB table.
+- Adding data into the table.
+- Modifying an existing item.
+- Querying the table.
+- Deleting the DynamoDB table.
+
+Make sure to End Lab from the AWS console to conclude the session properly. This hands-on experience should give you a good introduction to working with DynamoDB in AWS.

@@ -1,0 +1,221 @@
+#AWS 162-[DF]-Lab - [Challenge] Build and Access an RDS Server Connect AMAZON RDS DB WITH LinuxServer AND MySQL Workbench
+
+Check out my GitHub Repository - https://github.com/MFMKURIA/AWS-reStart-DATABASE-Labs
+
+ Task 1: Launch an Amazon RDS DB Instance
+
+1. Access AWS Management Console:
+   - Open your web browser and navigate to the [AWS Management Console](https://aws.amazon.com/console/).
+   - Sign in with your AWS account credentials.
+
+2. Navigate to Amazon RDS:
+   - In the AWS Management Console, at the top left, click on Services.
+   - Under Database, select RDS.
+
+3. Create a New Database Instance:
+   - Click on Create database.
+
+4. Select Engine Options:
+   - Choose MySQL as the engine type.
+   - Choose Standard Create for the creation method.
+
+5. Choose a DB Instance Class:
+   - Select Burstable classes (e.g., db.t3.micro).
+   - Choose the appropriate instance size based on your needs.
+
+6. Configure DB Instance Settings:
+   - DB Instance Identifier: Enter a name for your DB instance.
+   - Master Username and Password: Enter credentials. Make sure to note these down for future use.
+   - Database Name: Specify a name for your database.
+
+7. Configure Advanced Settings:
+   - VPC: Use the Lab VPC provided.
+   - Subnet Group: Select the appropriate subnet group.
+   - Security Group: Create or select a security group that allows inbound traffic to the database from your LinuxServer (typically port 3306 for MySQL).
+   - Public Accessibility: Ensure it's set according to lab requirements.
+   - Additional Configuration: Review and adjust settings as necessary, such as storage type and size (e.g., General Purpose SSD, up to 100 GB).
+
+8. Launch the Instance:
+   - Review your settings under Database options, Storage, and Networking.
+   - Click on Create database.
+
+9. Wait for the DB Instance to Launch:
+   - It may take a few minutes for the DB instance to be created and become available.
+
+ Task 2: Connect to LinuxServer and Install MySQL Client
+
+1. Access LinuxServer:
+   - Use the provided details (IP address or hostname) to SSH into the LinuxServer.
+
+2. Install MySQL Client:
+   - On the LinuxServer command line, install the MySQL client:
+     ```bash
+     sudo apt update
+     sudo apt install mysql-client
+     ```
+
+ Task 3: Interact with MySQL Database
+
+1. Connect to Your RDS Instance:
+   - Use the MySQL client to connect to your RDS instance. Replace `<endpoint>` with your RDS endpoint, `<username>` with your master username, and `<password>` with your master password:
+     ```bash
+     mysql -h <endpoint> -u <username> -p
+     ```
+   - Enter your password when prompted.
+
+2. Create the RESTART Table:
+   - Execute the following SQL commands to create the `RESTART` table:
+     ```sql
+     CREATE TABLE RESTART (
+         StudentID INT,
+         StudentName VARCHAR(255),
+         RestartCity VARCHAR(255),
+         GraduationDate DATETIME
+     );
+     ```
+
+3. Insert Sample Data into RESTART Table:
+   - Insert 10 sample rows into the `RESTART` table:
+     ```sql
+     INSERT INTO RESTART (StudentID, StudentName, RestartCity, GraduationDate) VALUES
+     (1, 'John Doe', 'New York', '2023-05-15 10:30:00'),
+     (2, 'Jane Smith', 'Los Angeles', '2023-06-20 14:45:00'),
+     (3, 'Michael Johnson', 'Chicago', '2023-07-10 09:00:00'),
+     (4, 'Emily Brown', 'Houston', '2023-08-05 11:15:00'),
+     (5, 'David Wilson', 'Philadelphia', '2023-09-01 13:30:00'),
+     (6, 'Sarah Davis', 'Phoenix', '2023-10-10 15:45:00'),
+     (7, 'Robert Martinez', 'San Antonio', '2023-11-15 08:00:00'),
+     (8, 'Linda Anderson', 'San Diego', '2023-12-20 10:30:00'),
+     (9, 'James Miller', 'Dallas', '2024-01-05 12:45:00'),
+     (10, 'Karen Thompson', 'Austin', '2024-02-15 14:00:00');
+     ```
+
+4. Select All Rows from RESTART Table:
+   - Query all rows from the `RESTART` table:
+     ```sql
+     SELECT  FROM RESTART;
+     ```
+
+5. Create the CLOUD_PRACTITIONER Table:
+   - Execute the following SQL commands to create the `CLOUD_PRACTITIONER` table:
+     ```sql
+     CREATE TABLE CLOUD_PRACTITIONER (
+         StudentID INT,
+         CertificationDate DATETIME
+     );
+     ```
+
+6. Insert Sample Data into CLOUD_PRACTITIONER Table:
+   - Insert 5 sample rows into the `CLOUD_PRACTITIONER` table:
+     ```sql
+     INSERT INTO CLOUD_PRACTITIONER (StudentID, CertificationDate) VALUES
+     (1, '2023-03-10 10:00:00'),
+     (2, '2023-04-20 12:00:00'),
+     (3, '2023-05-15 14:00:00'),
+     (4, '2023-06-01 16:00:00'),
+     (5, '2023-07-05 08:30:00');
+     ```
+
+7. Select All Rows from CLOUD_PRACTITIONER Table:
+   - Query all rows from the `CLOUD_PRACTITIONER` table:
+     ```sql
+     SELECT  FROM CLOUD_PRACTITIONER;
+     ```
+
+8. Perform Inner Join:
+   - Perform an inner join between `RESTART` and `CLOUD_PRACTITIONER` tables to display `StudentID`, `StudentName`, and `CertificationDate`:
+     ```sql
+     SELECT r.StudentID, r.StudentName, cp.CertificationDate
+     FROM RESTART r
+     INNER JOIN CLOUD_PRACTITIONER cp ON r.StudentID = cp.StudentID;
+     ```
+
+9. Capture Screenshots:
+   - Take screenshots of each query result as required for submission.
+
+ Task 4: Complete and End Lab
+
+1. End Lab:
+   - Once all tasks are completed and screenshots are captured, click on End Lab at the top of the lab instructions page.
+   - Confirm by clicking Yes.
+
+Congratulations! You have completed the Challenge Lab for Amazon RDS. This experience should provide you with a good introduction to setting up and interacting with RDS instances in AWS.
+
+
+CONNECTING MY MySQL Workbench WITH AWS AURORA DB
+
+To set up a new connection in MySQL Workbench using the Standard TCP/IP over SSH method to connect to an AWS Aurora DB instance, follow these steps:
+
+    Prerequisites
+1.   AWS Aurora DB Instance  : Make sure your Aurora DB instance is up and running.
+2.   SSH Access  : Ensure you have SSH access to an EC2 instance in the same VPC as your Aurora DB instance.
+3.   MySQL Workbench  : Download and install [MySQL Workbench](https://dev.mysql.com/downloads/workbench/).
+
+    Step-by-Step Guide
+
+1.   Open MySQL Workbench  :
+   - Launch MySQL Workbench on your computer.
+
+2.   Create a New Connection  :
+   - Click on the `+` button next to   MySQL Connections   to create a new connection.
+
+3.   Set Connection Parameters  :
+   -   Connection Name  : Enter a name for your connection (e.g., `AWS Aurora Connection`).
+
+4.   Set SSH Parameters  :
+   -   Connection Method  : Select `Standard TCP/IP over SSH`.
+
+5.   Configure SSH Details  :
+   -   SSH Hostname  : Enter the public IP address or DNS name of your EC2 instance (e.g., `ec2-xx-xx-xx-xx.compute-1.amazonaws.com`).
+   -   SSH Username  : Enter the username for your EC2 instance (e.g., `ec2-user` for Amazon Linux, `ubuntu` for Ubuntu).
+   -   SSH Key File  : Browse and select the `.pem` key file that you use to SSH into your EC2 instance.
+
+6.   Configure MySQL Details  :
+   -   MySQL Hostname  : Enter the endpoint of your Aurora DB instance (e.g., `mydb.cluster-xxxxxx.us-west-2.rds.amazonaws.com`).
+   -   MySQL Server Port  : Default is `3306`.
+   -   Username  : Enter the master username for your Aurora DB instance.
+   -   Password  : Enter the password for your Aurora DB instance.
+
+7.   Test Connection  :
+   - Click on `Test Connection` to ensure all the parameters are correct and MySQL Workbench can connect to the Aurora DB instance.
+
+8.   Save Connection  :
+   - Click `OK` to save the connection settings.
+
+    Example Configuration
+
+  SSH Parameters:  
+-   SSH Hostname  : `ec2-xx-xx-xx-xx.compute-1.amazonaws.com`
+-   SSH Username  : `ec2-user`
+-   SSH Key File  : `path/to/your/keyfile.pem`
+
+  MySQL Parameters:  
+-   MySQL Hostname  : `mydb.cluster-xxxxxx.us-west-2.rds.amazonaws.com`
+-   MySQL Server Port  : `3306`
+-   Username  : `your-db-username`
+-   Password  : `your-db-password`
+
+    Detailed Instructions with Screenshots
+
+1.   Open MySQL Workbench and Create a New Connection  :
+
+   ![MySQL Workbench New Connection](https://i.imgur.com/7QL0tLt.png)
+
+2.   Select Standard TCP/IP over SSH  :
+
+   ![Select Connection Method](https://i.imgur.com/vmQJK0u.png)
+
+3.   Enter SSH and MySQL Parameters  :
+
+   ![SSH Parameters](https://i.imgur.com/XRH3cK1.png)
+
+   ![MySQL Parameters](https://i.imgur.com/yyYDfiy.png)
+
+4.   Test Connection and Save  :
+
+   ![Test Connection](https://i.imgur.com/x8EYc8r.png)
+
+By following these steps, you should be able to connect to your AWS Aurora DB instance using MySQL Workbench via an SSH tunnel. If you encounter any issues, make sure the security group associated with your Aurora DB allows inbound traffic from the EC2 instance and that your EC2 instance is properly configured to allow SSH access.
+
+
+
